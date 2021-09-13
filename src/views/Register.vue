@@ -4,7 +4,6 @@
     <hr>
     <div class="columns is-centered">
       <div class="column is-half">
-
         <div v-if="error!=undefined">
           <div class="notification is-danger">
             <p>{{error}}</p>
