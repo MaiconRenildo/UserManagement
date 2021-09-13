@@ -49,7 +49,7 @@ export default{
         this.error=undefined
         this.email='',
         this.password=''
-
+        console.log(result)
         localStorage.setItem('token',result.data.token)
 
         this.$router.push({name:'Home'}) //Redireciona o usuário para outra rota
