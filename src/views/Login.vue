@@ -55,7 +55,8 @@ export default{
         this.$router.push({name:'Home'}) //Redireciona o usuário para outra rota
 
       }catch(err){
-        let msgErro=err.response.data.err
+        
+        let msgErro=err.response.data
         this.error=msgErro
       } 
     }

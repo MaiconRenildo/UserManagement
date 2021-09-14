@@ -44,7 +44,7 @@
             <td v-if="user.role==1">Administrador</td>
             <td v-else>Usuário comum</td> 
 
-            <td><button class="button is-success">Editar</button> | <button @click="showAndDelete(user.id)" class="button is-danger">Deletar</button></td>
+            <td> <router-link :to="{name:'UserEdit',params:{id:user.id}}"><button class="button is-success">Editar</button></router-link>  | <button @click="showAndDelete(user.id)" class="button is-danger">Deletar</button></td>
           </tr>
         </tbody>
 
