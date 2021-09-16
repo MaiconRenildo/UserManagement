@@ -12,20 +12,32 @@
         </div>
         <p>Senha</p>
         <input type="password" placeholder="******" class="input" v-model="password" required><hr>
-        <button @click="newPass()" class="button is-success">Logar</button>
+        <button @click="newPass()" class="button is-success">Salvar nova senha</button>
       </div>
     </div>
 
 
     <p>{{password}}</p>
+    <p>{{id}}</p>
+    <p>{{token}}</p>
   </div>
 </template>
 
 <script>
 import axios from "axios"
 export default{
+  created(){
+    if(this.$route.params.status){
+      this.token=this.$route.params.token
+      this.id=this.$route.params.id;
+    }else{
+      this.$router.push({name:'recover'})
+    }
+  },
   data(){
     return{
+      id:'',
+      token:'',
       password:'',
       error:undefined
     }
@@ -33,30 +45,22 @@ export default{
   methods:{
 
     async newPass(){
-      /*
+      
         const form={
-        email:this.email,
+        token:this.token,
+        id:this.id,
         password:this.password,
       }
 
+      console.log(this.$route.params.id)
+      console.log(this.token)
       try{
-        let result=await axios.post('http://localhost:8686/login',form)
-        this.error=undefined
-        this.email='',
-        this.password=''
-        console.log(result)
-        localStorage.setItem('token',result.data.token)
-
-        this.$router.push({name:'Home'}) //Redireciona o usuário para outra rota
-
+        await axios.post('http://localhost:8686/changePassword',form)
+        this.$router.push({name:'login'})
       }catch(err){
-        let msgErro=err.response.data.err
-        this.error=msgErro
-      } 
-      */
-
+        this.error=err.response.data
+      }
     }
-
   }
 }
 </script>

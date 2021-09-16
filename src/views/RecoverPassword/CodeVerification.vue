@@ -13,22 +13,30 @@
         <p>Código</p>
         <input type="text"  class="input" v-model="code">
         <p>Senha</p>
-        <input type="password" placeholder="******" class="input" v-model="password" required><hr>
+        <input type="password" placeholder="******" class="input" v-model="email" required><hr>
         <button @click="verification()" class="button is-success">Verificar</button>
       </div>
     </div>
 
-
     <p>{{code}}</p>
+    <p>{{email}}</p>
 
   </div>
 </template>
 
 <script>
-import axios from "axios"
+import axios from 'axios'
 export default{
+  created(){
+    if(this.$route.params.status){
+      this.email=this.$route.params.email
+    }else{
+      this.$router.push({name:'recover'})
+    }
+  },
   data(){
     return{
+      email:'',
       code:'',
       error:undefined
     }
@@ -36,27 +44,16 @@ export default{
   methods:{
 
     async verification(){
-  
       const form={
-        code:this.code
+        token:this.code
       }
-      /*
       try{
-        let result=await axios.post('http://localhost:8686/login',form)
-        this.error=undefined
-        this.email='',
-        this.password=''
-        console.log(result)
-        localStorage.setItem('token',result.data.token)
-
-        this.$router.push({name:'Home'}) //Redireciona o usuário para outra rota
-
+        let result=await axios.post('http://localhost:8686/tokenValidate',form)
+        let id=result.data.id
+        this.$router.push({name:'newPassword',params:{id:id,token:this.code,status:true}})
       }catch(err){
-        let msgErro=err.response.data.err
-        this.error=msgErro
-      } 
-      */
-      
+        this.error=err.response.data
+      }
     }
 
   }

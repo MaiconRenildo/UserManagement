@@ -4,7 +4,11 @@ import Register from '../views/Register.vue'
 import Login from '../views/Login.vue'
 import Users from '../views/Admin/Users.vue'
 import Edit from '../views/Admin/Edit.vue'
+import Forgot from '../views/RecoverPassword/Forgot.vue'
+import CodeVerification from '../views/RecoverPassword/CodeVerification.vue'
+import NewPassword from '../views/RecoverPassword/NewPassword.vue'
 import axios from 'axios'
+
 
 function adminAuth(to,from,next){
   let req={
@@ -56,6 +60,21 @@ const routes = [
     name:'UserEdit',
     component:Edit,
     beforeEnter:adminAuth
+  },
+  {
+    path:'/recoverPassword',
+    name:'recover',
+    component:Forgot
+  },
+  {
+    path:'/tokenValidate',
+    name:'tokenValidate',
+    component:CodeVerification
+  },
+  {
+    path:'/newPassword',
+    name:'newPassword',
+    component:NewPassword
   }
 
 ]
