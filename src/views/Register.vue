@@ -1,32 +1,43 @@
 <template>
   <div>
-    <h1>Registro de usuário</h1>
-    <hr>
-    <div class="columns is-centered">
-      <div class="column is-half">
-        <div v-if="error!=undefined">
-          <div class="notification is-danger">
-            <p>{{error}}</p>
-          </div>
+    <Navbar/>
+    <div class="box">
+
+      <div class="field">
+        <label class="label">Nome</label>
+        <div class="control">
+          <input class="input" type="text" placeholder="Nome" v-model="name">
         </div>
-        <p>Nome</p>
-        <input type="text" placeholder="Nome do usuário" class="input" v-model="name">
-        <p>E-mail</p>
-        <input type="email" placeholder="email@email.com" class="input" v-model="email">
-        <p>Senha</p>
-        <input type="password" placeholder="******" class="input" v-model="password" required><hr>
-        <button @click="register()" class="button is-success">Cadastrar</button>
+      </div>
+
+      <div class="field">
+        <label class="label">E-mail</label>
+        <div class="control">
+            <input class="input" type="email" placeholder="email@email.com" v-model="email">
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label">Senha</label>
+        <div class="control">
+          <input class="input" type="password" placeholder="********" v-model="password">
+        </div>
+      </div>
+
+      <button @click="register()" class="button is-success">Cadastrar</button>
+    </div>
+    <div v-if="error!=undefined">
+      <div class="notification is-danger">
+        <p>{{error}}</p>
       </div>
     </div>
 
-    <p>{{name}}</p>
-    <p>{{email}}</p>
-    <p>{{password}}</p>
   </div>
 </template>
 
 <script>
 import axios from "axios"
+import Navbar from '@/components/Navbar.vue'
 export default{
   data(){
     return{
@@ -35,6 +46,9 @@ export default{
       password:'',
       error:undefined
     }
+  },
+  components:{
+    Navbar
   },
   methods:{
 
@@ -47,19 +61,14 @@ export default{
       }
 
       try{
-        let result=await axios.post('http://localhost:8686/user',form)
+        await axios.post('http://localhost:8686/user',form)
         this.error=undefined
         this.email='',
         this.name='',
         this.password=''
-
-        console.log(result)
-
-        //Redireciona o usuário para outra rota
-        this.$router.push({name:'Home'})
-
+        this.$router.push({name:'Home'})//Redireciona o usuário para outra rota
       }catch(err){
-        let msgErro=err.response.data.err
+        let msgErro=err.response.data
         this.error=msgErro
       } 
     }

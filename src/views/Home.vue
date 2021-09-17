@@ -7,6 +7,7 @@
     <router-link to="/admin/users">Users</router-link> | 
     <HelloWorld msg="Welcome to Your Vue.js App"/>
     
+    
   </div>
 </template>
 
